@@ -1,0 +1,77 @@
+.my-navbar{
+    background-color: transparent;
+    opacity: 0.9;
+    min-height: 5rem;
+}
+
+.my-navbar ul li a{
+    font-size: 1.5rem;
+    padding: 1rem;
+    color: #333;
+}
+
+.my-navbar ul li a:hover{
+   border: 1px solid #333;
+   border-radius: 10px;
+   text-decoration: none;
+   box-shadow: 0 0.4 0 0;
+}
+.my-navbar ul li a:active, .my-navbar ul li a:focus{
+    text-decoration: underline;
+    text-decoration-color: #333;
+    text-underline-offset: 10px;
+}
+
+.hero-component{
+    background: url('../images/mypic1.jpeg') no-repeat center center;
+    background-size: cover;
+    color: #fff; /* Text color on the hero section */
+    height: 800px;
+    width: 100%;
+
+}
+
+.hero-content{
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right:4.5rem;
+    top: 20rem;
+}
+.heading-text{
+    font-weight: 700;
+    font-size: 4.5rem;
+    color: #fff;
+
+}
+
+#skills ul li img{
+    height: 60px;
+    width: 60px;
+}
+
+#skills ul li {
+    min-height: 100%;
+    border: 2px solid #fff;
+    margin: 20px;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.skill-card-text {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000;
+}
+.skills-text{
+    font-size: 3.5rem;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+#skills{
+    background-image: linear-gradient(to right, #fff, #fff);
+}
+
