@@ -11,6 +11,26 @@
     color: #333;
 }
 
+.progress {
+   border: 1px solid #B0B0B0;
+   border-radius: 25px;
+   box-shadow: 0 0 3px #B0B0;
+   backdrop-filter: blur(2px) brightness(101%);
+       height: 14px;
+       font-size: 10px
+}
+
+.bar {
+   width: 80%;
+    /*background-image: linear-gradient(to left, #684264, #783281, #7e1ea5, #7404cf, #4300ff);*/
+    /*background-image: linear-gradient(to right, #7721f9, #008cff, #00b8ff, #00d5a8, #00e708);*/
+    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+   box-shadow: inset 0px 12px 1.7px #FFFFFF33;
+   border-radius: 25px;
+   color: white;
+   text-align: center;
+}
+
 .my-navbar ul li a:hover{
    border: 1px solid #333;
    border-radius: 10px;
@@ -35,6 +55,8 @@
     height: 100vh;
     width: 100%;
     text-align: center;
+    min-height: 800px;
+
 }
 
 .btn-resume{
@@ -55,7 +77,7 @@
     width:30%;
     height: 300px;
     position: absolute;
-    right:4.5rem;
+    right:3%;
     animation-name: example;
     animation-duration: 3s;
     animation-delay: 1s;
@@ -73,8 +95,7 @@
 }
 
 #skills ul li img{
-    height: 65px;
-    width: 60px;
+    max-width: 75px;
 }
 #skills ul li {
     min-height: 100%;
@@ -89,6 +110,7 @@
     font-size: 1.5rem;
     font-weight: 500;
     color: #000;
+    margin-bottom: 10px;
 }
 .skills-text{
     font-size: 3.5rem;
@@ -97,12 +119,13 @@
     text-align: center;
 }
 #skills{
-    background-image:#feffff;
+   background-image: linear-gradient(to right, #ffffff, #fdfdfd, #fbfcfb, #fafafa, #f8f8f8);
 }
 
 @media only screen and (max-width: 768px){
     .hero-component{
         background: #000;
+            min-height: 600px;
     }
 
     .my-navbar ul li a{
@@ -115,9 +138,7 @@
         color: #fff;
     }
     #skills{
-        color: #fff;
-        background: rgb(174,207,238);
-        background: radial-gradient(circle, rgba(174,207,238,1) 0%, rgba(47,56,49,1) 93%);
+        background-image: linear-gradient(to left bottom, #e6e6e6, #e8e9ea, #e8eced, #eaf0ed, #f0f2ec);
     }
     .hero-content{
         width: initial;
