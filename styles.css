@@ -7,6 +7,19 @@
   --text-color: #e0e0e0;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
 /* Common styles */
 .btn, .my-navbar ul li a {
   padding: 10px 20px;
