@@ -20,6 +20,7 @@
   font-weight: 700;
   text-align: center;
   margin-bottom: 30px;
+  color: #fff
 }
 
 /* Navbar styles */
@@ -509,4 +510,302 @@ h1 {
 
 .skill-icon.bootstrap {
   filter: brightness(0) invert(1);
+}
+
+.carousel-section{
+    background-color: #000;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-box {
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #2a2a2a;
+}
+
+.item-box img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.item-box h3 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+.item-box p {
+  margin: 0;
+  font-size: 14px;
+  flex-grow: 1;
+  color: #cccccc;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  transition: background-color 0.3s;
+}
+
+.carousel-button:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #555;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .carousel-button {
+      top: auto;
+      bottom: 10px;
+      transform: none;
+  }
+
+  .carousel-button.prev {
+      left: 50%;
+      transform: translateX(-60px);
+  }
+
+  .carousel-button.next {
+      right: 50%;
+      transform: translateX(60px);
+  }
+
+  .carousel-dots {
+      margin-bottom: 60px;
+  }
+}
+
+.carousel-section {
+    padding: 30px 0;
+    background-color: #000;
+    color: #ffffff;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+.carousel-container.full-width {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 40px;
+    position: relative;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.item-box {
+    background-color: #2a2a2a;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 70%;
+    position: relative;
+    overflow: hidden;
+}
+
+.responsive-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.item-content {
+    padding: 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.item-content p {
+    font-size: 1.1rem;
+    color: #cccccc;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.carousel-button.prev {
+    left: 20px;
+}
+
+.carousel-button.next {
+    right: 20px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.carousel-dots .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #555;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-dots .dot.active {
+    background-color: #ffffff;
+}
+
+@media (max-width: 768px) {
+
+    .item-box img {
+        width: 100%;
+        height: 300px;
+        object-fit: scale-down;
+        border-radius: 4px;
+    }
+    .carousel-item {
+        padding: 10px;
+    }
+
+    .item-box {
+        height: 500px;
+    }
+
+    .carousel-button {
+        top: auto;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+
+    .carousel-button.prev {
+        left: 50%;
+        transform: translateX(-60px);
+    }
+
+    .carousel-button.next {
+        right: 50%;
+        transform: translateX(60px);
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .item-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .item-content p {
+        font-size: 1rem;
+    }
+
+    .carousel-dots {
+        margin-bottom: 80px;
+    }
 }
