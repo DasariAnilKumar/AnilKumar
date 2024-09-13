@@ -454,7 +454,6 @@ h1 {
   .hero-component {
     background: #000;
     min-height: 600px;
-    height: unset !important;
   }
 
   .section-title{
