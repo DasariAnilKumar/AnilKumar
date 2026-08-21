@@ -112,7 +112,7 @@ const cardPositions = [
   },
 ];
 
-export default function FolderComponent() {
+export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | "lg" } = {}) {
   const theme = themes.black;
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
