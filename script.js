@@ -1,157 +1,136 @@
+/**
+ * ANIL KUMAR — PORTFOLIO SCRIPT
+ * Clean, natural scrolling, floating pill scrollspy, clipboard copy, and lightbox.
+ */
 
-    function checkScroll() {
-        var elements = document.querySelectorAll('.timeline-item');
-        elements.forEach(function(element) {
-            var position = element.getBoundingClientRect();
-            if(position.top < window.innerHeight && position.bottom >= 0) {
-                element.classList.add('show');
+document.addEventListener('DOMContentLoaded', () => {
+    initScrollspy();
+    initSmoothAnchors();
+});
+
+/* --------------------------------------------------------------------------
+   1. Floating Pill Scrollspy
+   -------------------------------------------------------------------------- */
+function initScrollspy() {
+    const pillButtons = document.querySelectorAll('.pill-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    function updateActivePill() {
+        let current = 'hero';
+        const scrollPosition = window.scrollY + 200;
+
+        sections.forEach((section) => {
+            const top = section.offsetTop;
+            const height = section.offsetHeight;
+            if (scrollPosition >= top && scrollPosition < top + height) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        pillButtons.forEach((btn) => {
+            if (btn.getAttribute('data-nav') === current) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
             }
         });
     }
 
-    function highlightBox(index) {
-        var dots = document.querySelectorAll('.timeline-dot');
-        var contents = document.querySelectorAll('.timeline-content');
+    window.addEventListener('scroll', updateActivePill, { passive: true });
+    updateActivePill();
+}
 
-        dots.forEach((dot, i) => {
-            if (i === index) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
+/* --------------------------------------------------------------------------
+   2. Smooth Anchor Navigation
+   -------------------------------------------------------------------------- */
+function initSmoothAnchors() {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const targetElem = document.querySelector(targetId);
+            if (targetElem) {
+                e.preventDefault();
+                targetElem.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
+    });
+}
 
-        contents.forEach((content, i) => {
-            if (i === index) {
-                content.classList.add('active');
-            } else {
-                content.classList.remove('active');
-            }
-        });
+function scrollToTimeline() {
+    const timeline = document.getElementById('timeline');
+    if (timeline) {
+        timeline.scrollIntoView({ behavior: 'smooth' });
     }
+}
 
-window.addEventListener('scroll', checkScroll);
-window.addEventListener('load', checkScroll);
+/* --------------------------------------------------------------------------
+   3. Clipboard Copy Utility
+   -------------------------------------------------------------------------- */
+function copyEmail() {
+    const email = 'anilkumard707@gmail.com';
+    const textEl = document.getElementById('copyTxt');
 
-        function isElementInViewport(el) {
-            const rect = el.getBoundingClientRect();
-            return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
+    navigator.clipboard.writeText(email).then(() => {
+        if (textEl) {
+            textEl.textContent = 'Copied!';
+            setTimeout(() => {
+                textEl.textContent = 'Copy Address';
+            }, 2200);
         }
+    }).catch(() => {
+        const temp = document.createElement('input');
+        temp.value = email;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
 
-        function handleScroll() {
-            const cards = document.querySelectorAll('.skill-card');
-            cards.forEach(card => {
-                if (isElementInViewport(card)) {
-                    card.classList.add('visible');
-                }
-            });
+        if (textEl) {
+            textEl.textContent = 'Copied!';
+            setTimeout(() => {
+                textEl.textContent = 'Copy Address';
+            }, 2200);
         }
+    });
+}
 
-        document.addEventListener('DOMContentLoaded', () => {
-            handleScroll(); // Check initial state
-            window.addEventListener('scroll', handleScroll);
-            window.addEventListener('resize', handleScroll);
+/* --------------------------------------------------------------------------
+   4. Certificate Lightbox Modal
+   -------------------------------------------------------------------------- */
+function openCertModal(src, title) {
+    const modal = document.getElementById('certModal');
+    const img = document.getElementById('certModalImg');
+    const titleEl = document.getElementById('certModalTitle');
 
-            const progressBars = document.querySelectorAll('.skill-progress');
-            progressBars.forEach(bar => {
-                const randomPercentage = Math.floor(Math.random() * (80 - 70 + 1)) + 70;
-                setTimeout(() => {
-                    bar.style.width = `${randomPercentage}%`;
-                }, 300);
-            });
-        });
+    if (!modal || !img) return;
 
-function isElementInViewport(el) {
-            const rect = el.getBoundingClientRect();
-            return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
+    img.src = src;
+    if (titleEl) titleEl.textContent = title || '';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCertModal(e) {
+    const modal = document.getElementById('certModal');
+    if (!modal) return;
+
+    if (e.target === modal || e.target.closest('.modal-close-btn')) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('certModal');
+        if (modal && modal.classList.contains('open')) {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
         }
-
-        function handleScroll() {
-            const cards = document.querySelectorAll('.skill-card');
-            cards.forEach((card, index) => {
-                if (isElementInViewport(card)) {
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, index * 100); // Staggered animation
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            handleScroll(); // Check initial state
-            window.addEventListener('scroll', handleScroll);
-            window.addEventListener('resize', handleScroll);
-
-            const progressBars = document.querySelectorAll('.skill-progress');
-            progressBars.forEach(bar => {
-                const randomPercentage = Math.floor(Math.random() * (80 - 70 + 1)) + 70;
-                setTimeout(() => {
-                    bar.style.width = `${randomPercentage}%`;
-                }, 300);
-            });
-        });
-
-
-
-        const carousel = document.querySelector('.carousel');
-        const items = document.querySelectorAll('.carousel-item');
-        const prevButton = document.querySelector('.carousel-button.prev');
-        const nextButton = document.querySelector('.carousel-button.next');
-        const dotsContainer = document.querySelector('.carousel-dots');
-
-        let currentIndex = 0;
-        const totalItems = items.length;
-
-        // Create dots
-        for (let i = 0; i < totalItems; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsContainer.appendChild(dot);
-        }
-
-        const dots = document.querySelectorAll('.dot');
-
-        function updateCarousel() {
-            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentIndex);
-            });
-        }
-
-        function goToSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % totalItems;
-            updateCarousel();
-        }
-
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-            updateCarousel();
-        }
-
-        nextButton.addEventListener('click', nextSlide);
-        prevButton.addEventListener('click', prevSlide);
-
-        // Auto-scroll
-        let intervalId = setInterval(nextSlide, 5000);
-
-        // Pause auto-scroll on hover
-        carousel.addEventListener('mouseenter', () => clearInterval(intervalId));
-        carousel.addEventListener('mouseleave', () => intervalId = setInterval(nextSlide, 5000));
-
-        updateCarousel();
+    }
+});

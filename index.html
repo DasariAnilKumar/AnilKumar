@@ -3,285 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Anil Kumar — Senior Software Engineer</title>
+    <meta name="description" content="Portfolio of Anil Kumar — Senior Software Engineer specializing in AEM Cloud, Java Backend, and Web Architecture.">
+
+    <!-- Fonts: Inter / Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <link rel="stylesheet" href="styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-<div class="main-container">
-    <section>
-        <nav class="my-navbar p-4 ">
-            <ul class="list-unstyled d-flex flex-wrap flex-row justify-content-start pt-2 mx-3 ">
-                <li class="px-2 ">
-                    <a class="link" href="#home" target="_self">Home</a>
-                </li>
-                <li class="px-2">
-                    <a class="link" href="#about" target="_self">About</a>
-                </li>
-                <li class="px-2 ">
-                    <a class="link" href="#skills" target="_self">Skills</a>
-                </li>
-                <li class="px-2 ">
-                    <a class="link" href="#social" target="_self">Social</a>
-                </li>
-            </ul>
-        </nav>
-        <section id="home" class="hero-component">
-            <div class="hero-content">
-                <h1 class="heading-text">Anil Kumar</h1>
-                <p>Hi there, I am Dedicated to utilizing my skills to conceive valuable
-                    initiatives for organization. Committed to delivering high-quality solutions and continuously pursuing knowledge and innovation to be an invaluable
-                    asset.
+<body class="canvas-bg">
+
+    <!-- Fixed Header -->
+    <header class="top-nav-bar">
+        <div class="brand-title">Anil Kumar</div>
+        <a href="#contact" class="top-contact-pill">
+            <span>Contact</span>
+            <i data-lucide="arrow-up-right"></i>
+        </a>
+    </header>
+
+    <!-- Fixed Floating Bottom Navigation Pill -->
+    <nav class="bottom-floating-nav">
+        <div class="nav-pill-wrapper" id="pillMenu">
+            <a href="#hero" class="pill-btn active" data-nav="hero">HOME</a>
+            <a href="#timeline" class="pill-btn" data-nav="timeline">TIMELINE</a>
+            <a href="#skills" class="pill-btn" data-nav="skills">SKILLS</a>
+            <a href="#contact" class="pill-btn" data-nav="contact">CONTACT</a>
+        </div>
+    </nav>
+
+    <!-- Fixed Bottom-Left Scroll Arrow -->
+    <div class="bottom-left-arrow">
+        <button class="arrow-circle-btn" onclick="scrollToTimeline()" aria-label="Scroll to Timeline">
+            <i data-lucide="arrow-down"></i>
+        </button>
+    </div>
+
+    <!-- Fixed Bottom-Right Socials -->
+    <div class="bottom-right-socials">
+        <a href="https://www.linkedin.com/in/dasari-anil-kumar-327ab3208/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <i data-lucide="linkedin"></i>
+        </a>
+        <a href="https://www.instagram.com/anil.msdian.07" target="_blank" rel="noopener" aria-label="Instagram">
+            <i data-lucide="instagram"></i>
+        </a>
+        <a href="mailto:anilkumard707@gmail.com" aria-label="Email">
+            <i data-lucide="mail"></i>
+        </a>
+    </div>
+
+    <!-- MAIN PAGE (4 STRUCTURED SECTIONS) -->
+    <main class="page-content">
+
+        <!-- ===================================================================
+             SECTION 1: HERO (MATCHING KAROLINA HESS SCREENSHOT)
+             =================================================================== -->
+        <section id="hero" class="section-hero">
+            
+            <!-- Large Display Title in Background -->
+            <div class="hero-typography">
+                <div class="title-row top">Creative Web</div>
+                <div class="title-row bottom">Developer</div>
+                <p class="hero-caption">
+                    specialized in AEM Cloud, Java backend & scalable web systems
                 </p>
-                <a class="btn btn-resume " target="_blank" download="" href="https://drive.google.com/file/d/1QvUKOEe_Myf6pOFtFRBck-WBUq5itDb9/view?usp=sharing">Download Resume</a>
+            </div>
+
+            <!-- Subject Cutout Image Centered in Foreground -->
+            <div class="hero-subject-wrapper">
+                <img src="images/profile_cutout.png" alt="Anil Kumar" class="hero-cutout-image">
+            </div>
+
+        </section>
+
+        <!-- ===================================================================
+             SECTION 2: TIMELINE (CAREER & EDUCATION)
+             =================================================================== -->
+        <section id="timeline" class="content-section">
+            <div class="section-container">
+                
+                <div class="section-title-row">
+                    <span class="section-num">[ 02 ]</span>
+                    <h2 class="section-title">Career Timeline</h2>
+                </div>
+
+                <div class="timeline-list">
+                    
+                    <!-- Experience Commerce -->
+                    <article class="timeline-card">
+                        <div class="card-left">
+                            <span class="card-date">2024 — Present</span>
+                            <span class="status-pill active">Current Role</span>
+                        </div>
+                        <div class="card-right">
+                            <h3 class="role-heading">Senior Software Engineer</h3>
+                            <h4 class="company-heading">Experience Commerce</h4>
+                            <p class="role-summary">
+                                Leading core AEM as a Cloud Service platform development, custom OSGi R7 declarative services, Sling models, HTL/Sightly components, custom Servlets, workflows, and robust JUnit test coverage.
+                            </p>
+                            <div class="tags-row">
+                                <span>AEM Cloud</span>
+                                <span>OSGi R7</span>
+                                <span>Apache Sling</span>
+                                <span>HTL / Sightly</span>
+                                <span>JUnits</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- HCL Tech -->
+                    <article class="timeline-card">
+                        <div class="card-left">
+                            <span class="card-date">2022 — 2024</span>
+                            <span class="status-pill award">🏆 ERS Champion</span>
+                        </div>
+                        <div class="card-right">
+                            <h3 class="role-heading">Senior Software Engineer</h3>
+                            <h4 class="company-heading">HCL Tech</h4>
+                            <p class="role-summary">
+                                Enterprise AEM 6.5 and Cloud platform engineering, Dynamic Media asset automation, Multi-Site Manager (MSM) regional rollouts, and Java/Python automation scripts. Received the <strong>HCL ERS Champion Award</strong> for outstanding delivery.
+                            </p>
+                            <div class="tags-row">
+                                <span>AEM 6.5 / Cloud</span>
+                                <span>Dynamic Media</span>
+                                <span>MSM Rollout</span>
+                                <span>Java 11</span>
+                                <span>Python</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- KSRM College -->
+                    <article class="timeline-card">
+                        <div class="card-left">
+                            <span class="card-date">2018 — 2022</span>
+                            <span class="status-pill">8.37 CGPA</span>
+                        </div>
+                        <div class="card-right">
+                            <h3 class="role-heading">B.Tech in Computer Science & Engineering</h3>
+                            <h4 class="company-heading">KSRM College of Engineering</h4>
+                            <p class="role-summary">
+                                Graduated with distinction (8.37 CGPA). Focused on Data Structures, Algorithms, Object-Oriented Software Design, Database Management Systems, and Web Engineering.
+                            </p>
+                            <div class="tags-row">
+                                <span>Data Structures</span>
+                                <span>Algorithms</span>
+                                <span>OOP</span>
+                                <span>DBMS</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Higher Secondary -->
+                    <article class="timeline-card">
+                        <div class="card-left">
+                            <span class="card-date">2015 — 2018</span>
+                            <span class="status-pill">Distinction</span>
+                        </div>
+                        <div class="card-right">
+                            <h3 class="role-heading">Higher Secondary & High School</h3>
+                            <h4 class="company-heading">Narayana Junior College & AP Model School</h4>
+                            <p class="role-summary">
+                                Completed Intermediate MPC with 98% distinction; High School SSC with 9.3 GPA.
+                            </p>
+                        </div>
+                    </article>
+
+                </div>
+
             </div>
         </section>
-        <div class="body-content">
-            <div>
-                <section id="project">
-                </section>
-                <section id="about">
-                    <div class="experience-container">
-                        <h1>TimeLine</h1>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-dot" onclick="highlightBox(0)"></div>
-                                <div class="timeline-date">2024 - Current</div>
-                                <div class="timeline-content">
-                                    <div class="job-title">Senior Software Engineer</div>
-                                    <div class="company">Experience Commerce(08/24 - present)</div>
-                                    <div class="skills">
-                                        AEM Cloud Stack, OSGI, Sling, JUnits, Sightly<br>
-                                        Workflows, Servlets.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot" onclick="highlightBox(1)"></div>
-                                <div class="timeline-date">2022 - 2024</div>
-                                <div class="timeline-content">
-                                    <div class="job-title">Senior Software Engineer</div>
-                                    <div class="company">HCL Tech (09/22 - 08/24)</div>
-                                    <div class="skills">
-                                        AEM Stack, Dynamic Media, OSGI, Sling, MSM,<br>
-                                        AEM Cloud Java, Python, JavaScript
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot" onclick="highlightBox(2)"></div>
-                                <div class="timeline-date">2018-2022</div>
-                                <div class="timeline-content">
-                                    <div class="job-title">B.Tech</div>
-                                    <div class="company">KSRM College of Engineering</div>
-                                    <div class="skills">
-                                        Computer science engineering (8.37 CGPA)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot" onclick="highlightBox(4)"></div>
-                                <div class="timeline-date">2016 - 2018</div>
-                                <div class="timeline-content">
-                                    <div class="job-title">Intermediate</div>
-                                    <div class="company">Narayana JR College, KNL</div>
-                                    <div class="skills">
-                                        MPC - (98%)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot" onclick="highlightBox(3)"></div>
-                                <div class="timeline-date">2015 - 2016</div>
-                                <div class="timeline-content">
-                                    <div class="job-title">SSC</div>
-                                    <div class="company">AP Model School</div>
-                                    <div class="skills">
-                                        9.3 GPA
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="carousel-section">
-                    <h2 class="section-title">Certifications & Achievements</h2>
-                    <div class="carousel-container full-width">
-                        <div class="carousel">
-                            <div class="carousel-item">
-                                <div class="item-box">
-                                    <div class="image-wrapper">
-                                        <img src="images/cert-1.png" alt="First Image" class="responsive-image">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3>Microsoft Azure Fundamental</h3>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="item-box">
-                                    <div class="image-wrapper">
-                                        <img src="images/cert-2.png" alt="Second Image" class="responsive-image">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3>Microsoft AI Fundamentals</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="item-box">
-                                    <div class="image-wrapper">
-                                        <img src="images/c-4.jpeg" alt="Third Image" class="responsive-image">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3>Internship Certification</h3>
-                                        <p>APSSDC internship completion certification</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="item-box">
-                                    <div class="image-wrapper">
-                                        <img src="images/c-5.jpeg" alt="Fourth Image" class="responsive-image">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3>HCL ERS Champion</h3>
-                                        <p>Best performance award for a quarter in 2023-24</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-button prev" aria-label="Previous slide">&#10094;</button>
-                        <button class="carousel-button next" aria-label="Next slide">&#10095;</button>
-                        <div class="carousel-dots"></div>
-                    </div>
-                </section>
-                <section id="skills">
-                    <div class="skills-container">
-                        <h1>My Skills</h1>
-                        <div class="skills-grid">
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon">
-                                <div class="skill-info">
-                                    <div class="skill-name">JavaScript</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML" class="skill-icon">
-                                <div class="skill-info">
-                                    <div class="skill-name">HTML</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS" class="skill-icon">
-                                <div class="skill-info">
-                                    <div class="skill-name">CSS</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <svg class="skill-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#e65100" stroke-width="10"/>
-                                    <path d="M50 20 C 60 40, 80 50, 50 80 C 20 50, 40 40, 50 20" fill="#fafafa" stroke="none"/>
-                                </svg>
-                                <div class="skill-info">
-                                    <div class="skill-name">AEM</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="skill-icon">
-                                <div class="skill-info">
-                                    <div class="skill-name">Java</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg" alt="jQuery" class="skill-icon">
-                                <div class="skill-info">
-                                    <div class="skill-name">jQuery</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" alt="Bootstrap" class="skill-icon bootstrap">
-                                <div class="skill-info">
-                                    <div class="skill-name">Bootstrap</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="skill-icon">
-                                <div class="skill-info">
-                                    <div class="skill-name">Python</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-card">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" class="skill-icon">
-                                <div class="skill-info">
-                                    <div class="skill-name">C#</div>
-                                    <div class="skill-bar">
-                                        <div class="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- ===================================================================
+             SECTION 3: SKILLS & CERTIFICATIONS
+             =================================================================== -->
+        <section id="skills" class="content-section">
+            <div class="section-container">
+                
+                <div class="section-title-row">
+                    <span class="section-num">[ 03 ]</span>
+                    <h2 class="section-title">Skills & Credentials</h2>
+                </div>
+
+                <!-- Skills 4-Column Grid -->
+                <div class="skills-grid">
+                    
+                    <div class="skill-card">
+                        <span class="skill-kicker">Enterprise CMS</span>
+                        <h3 class="skill-title">AEM Cloud & 6.5</h3>
+                        <p class="skill-text">OSGi R7, Sling Models, HTL/Sightly, Custom Servlets, Dynamic Media, MSM Multi-Site Rollout, Dispatcher.</p>
+                        <div class="skill-chips">
+                            <span>AEM Cloud</span>
+                            <span>OSGi</span>
+                            <span>Sling</span>
+                            <span>DAM</span>
                         </div>
                     </div>
-                </section>
-                <section id="social" class="social-section">
-                    <div class="container">
-                        <h2 class="section-title">Connect With Me</h2>
-                        <div class="social-content">
-                            <div class="social-item">
-                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItbWFpbCI+PHBhdGggZD0iTTQgNGgxNmMxLjEgMCAyIC45IDIgMnYxMmMwIDEuMS0uOSAyLTIgMkg0Yy0xLjEgMC0yLS45LTItMlY2YzAtMS4xLjktMiAyLTJ6Ij48L3BhdGg+PHBvbHlsaW5lIHBvaW50cz0iMjIsNiAxMiwxMyAyLDYiPjwvcG9seWxpbmU+PC9zdmc+" alt="Email" class="social-icon">
-                                <h3>Email</h3>
-                                <p><a href="mailto:anilkumard707@gmail.com">anilkumard707@gmail.com</a></p>
-                            </div>
-                            <div class="social-item">
-                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItaW5zdGFncmFtIj48cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSI1IiByeT0iNSI+PC9yZWN0PjxwYXRoIGQ9Ik0xNiAxMS4zN0E0IDQgMCAxIDEgMTIuNjMgOCA0IDQgMCAwIDEgMTYgMTEuMzd6Ij48L3BhdGg+PGxpbmUgeDE9IjE3LjUiIHkxPSI2LjUiIHgyPSIxNy41MSIgeTI9IjYuNSI+PC9saW5lPjwvc3ZnPg==" alt="Instagram" class="social-icon">
-                                <h3>Instagram</h3>
-                                <p><a href="https://www.instagram.com/anil.msdian.07" target="_blank">@Anil.Msdian.07</a></p>
-                            </div>
-                            <div class="social-item">
-                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItbGlua2VkaW4iPjxwYXRoIGQ9Ik0xNiA4YTYgNiAwIDAgMSA2IDZ2N2gtNHYtN2EyIDIgMCAwIDAtMi0yIDIgMiAwIDAgMC0yIDJ2N2gtNHYtN2E2IDYgMCAwIDEgNi02eiI+PC9wYXRoPjxyZWN0IHg9IjIiIHk9IjkiIHdpZHRoPSI0IiBoZWlnaHQ9IjEyIj48L3JlY3Q+PGNpcmNsZSBjeD0iNCIgY3k9IjQiIHI9IjIiPjwvY2lyY2xlPjwvc3ZnPg==" alt="LinkedIn" class="social-icon">
-                                <h3>LinkedIn</h3>
-                                <p><a href="https://www.linkedin.com/in/dasari-anil-kumar-327ab3208/" target="_blank">Dasari Anil Kumar</a></p>
-                            </div>
-                        </div>
-                        <div class="social-description">
-                            <p>Connect with me on social media or drop me an email. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
+
+                    <div class="skill-card">
+                        <span class="skill-kicker">Backend & Systems</span>
+                        <h3 class="skill-title">Java & Architecture</h3>
+                        <p class="skill-text">Java (8 / 11 / 17), JUnits & Mockito (TDD), Python Scripting, RESTful APIs, GraphQL, Maven, Jackrabbit Oak / JCR.</p>
+                        <div class="skill-chips">
+                            <span>Java 17</span>
+                            <span>JUnits</span>
+                            <span>Python</span>
+                            <span>REST</span>
                         </div>
                     </div>
-                </section>
+
+                    <div class="skill-card">
+                        <span class="skill-kicker">Frontend & Web</span>
+                        <h3 class="skill-title">Modern Web</h3>
+                        <p class="skill-text">JavaScript (ES6+), HTML5 Semantic Structure, Modern CSS3, Responsive UI/UX, DOM & Event APIs.</p>
+                        <div class="skill-chips">
+                            <span>JavaScript</span>
+                            <span>CSS3</span>
+                            <span>HTML5</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-card">
+                        <span class="skill-kicker">Cloud & DevOps</span>
+                        <h3 class="skill-title">Cloud & Tools</h3>
+                        <p class="skill-text">Microsoft Azure (AZ-900), Azure AI (AI-900), Adobe Cloud Manager, Git, IntelliJ IDEA, CI/CD Workflows.</p>
+                        <div class="skill-chips">
+                            <span>Azure</span>
+                            <span>Cloud Manager</span>
+                            <span>Git</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Certifications Strip -->
+                <div class="certifications-grid">
+                    
+                    <div class="cert-box" onclick="openCertModal('images/c-5.jpeg', 'HCL ERS Champion Award')">
+                        <div class="cert-img-wrap">
+                            <img src="images/c-5.jpeg" alt="HCL ERS Champion Award" loading="lazy">
+                        </div>
+                        <div class="cert-body">
+                            <span class="cert-tag">Award</span>
+                            <h4>HCL ERS Champion</h4>
+                            <p>Awarded for best quarterly delivery performance at HCL Tech.</p>
+                        </div>
+                    </div>
+
+                    <div class="cert-box" onclick="openCertModal('images/cert-1.png', 'Microsoft Certified: Azure Fundamentals (AZ-900)')">
+                        <div class="cert-img-wrap">
+                            <img src="images/cert-1.png" alt="Microsoft Azure Fundamentals" loading="lazy">
+                        </div>
+                        <div class="cert-body">
+                            <span class="cert-tag">Microsoft Certified</span>
+                            <h4>Azure Fundamentals</h4>
+                            <p>AZ-900 Cloud Architecture Credential.</p>
+                        </div>
+                    </div>
+
+                    <div class="cert-box" onclick="openCertModal('images/cert-2.png', 'Microsoft Certified: Azure AI Fundamentals (AI-900)')">
+                        <div class="cert-img-wrap">
+                            <img src="images/cert-2.png" alt="Microsoft AI Fundamentals" loading="lazy">
+                        </div>
+                        <div class="cert-body">
+                            <span class="cert-tag">Microsoft Certified</span>
+                            <h4>Azure AI Fundamentals</h4>
+                            <p>AI-900 Artificial Intelligence Credential.</p>
+                        </div>
+                    </div>
+
+                    <div class="cert-box" onclick="openCertModal('images/c-4.jpeg', 'APSSDC Full-Stack Internship Credential')">
+                        <div class="cert-img-wrap">
+                            <img src="images/c-4.jpeg" alt="APSSDC Full-Stack Credential" loading="lazy">
+                        </div>
+                        <div class="cert-body">
+                            <span class="cert-tag">Credential</span>
+                            <h4>APSSDC Full-Stack</h4>
+                            <p>Software development internship credential.</p>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
+        </section>
+
+        <!-- ===================================================================
+             SECTION 4: CONTACT
+             =================================================================== -->
+        <section id="contact" class="content-section contact-section">
+            <div class="section-container">
+                
+                <div class="section-title-row">
+                    <span class="section-num">[ 04 ]</span>
+                    <h2 class="section-title">Get in Touch</h2>
+                </div>
+
+                <div class="contact-box">
+                    <h3 class="contact-headline">
+                        Let's collaborate on new projects or discuss engineering opportunities.
+                    </h3>
+
+                    <div class="contact-email-row">
+                        <a href="mailto:anilkumard707@gmail.com" class="big-email-text">anilkumard707@gmail.com</a>
+                        <button class="copy-pill-btn" onclick="copyEmail()">
+                            <span id="copyTxt">Copy Address</span>
+                            <i data-lucide="copy"></i>
+                        </button>
+                    </div>
+
+                    <div class="contact-bottom-row">
+                        <div class="social-pills-row">
+                            <a href="https://www.linkedin.com/in/dasari-anil-kumar-327ab3208/" target="_blank" rel="noopener" class="social-pill-link">
+                                <span>LinkedIn</span> <i data-lucide="arrow-up-right"></i>
+                            </a>
+                            <a href="https://www.instagram.com/anil.msdian.07" target="_blank" rel="noopener" class="social-pill-link">
+                                <span>Instagram</span> <i data-lucide="arrow-up-right"></i>
+                            </a>
+                        </div>
+                        <span class="location-label">Bangalore / Hyderabad, India • IST (UTC+5:30)</span>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="footer-row">
+                    <span>&copy; 2026 Anil Kumar. All rights reserved.</span>
+                    <a href="#hero" class="back-to-top">
+                        <span>Back to top</span> <i data-lucide="arrow-up"></i>
+                    </a>
+                </footer>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- LIGHTBOX MODAL -->
+    <div class="modal-backdrop" id="certModal" onclick="closeCertModal(event)">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeCertModal(event)"><i data-lucide="x"></i></button>
+            <img src="" alt="Preview" id="certModalImg" class="modal-img">
+            <div id="certModalTitle" class="modal-caption"></div>
         </div>
+    </div>
 
-    </section>
-
-</div>
-
-<script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
