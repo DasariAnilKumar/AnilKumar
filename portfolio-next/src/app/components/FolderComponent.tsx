@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { X, ExternalLink } from "lucide-react";
+import { X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface CertificateItem {
   id: number;
@@ -54,7 +54,8 @@ export const certificatesData: CertificateItem[] = [
 const themes = {
   black: {
     backFill: "#0b0b0b",
-    backInsetShadow: "inset 0 0 8px 2px rgba(255,255,255,0.25), 0 20px 40px rgba(0,0,0,0.8)",
+    backInsetShadow:
+      "inset 0 0 8px 2px rgba(255,255,255,0.25), 0 20px 40px rgba(0,0,0,0.8)",
     flapFill: "#292929",
     flapFillOpacity: 0.25,
     flapStroke: "#888888",
@@ -70,62 +71,169 @@ const FLAP_PATH =
   "M0 25C0 11.1929 11.1929 0 25 0H136.084C143.044 0 149.689 2.90139 154.42 8.00608L178.08 33.5343C182.811 38.639 189.456 41.5404 196.416 41.5404H296C309.807 41.5404 321 52.7333 321 66.5404V216C321 229.807 309.807 241 296 241H25C11.1929 241 0 229.807 0 216V25Z";
 
 const cardPositions = [
-  // 1: Adobe (Front-most, left)
+  // 1: Adobe (Far Left)
   {
-    open: { x: -95, y: -160, rotate: -24 },
-    hover: { x: -50, y: -35, rotate: -14 },
-    closed: { x: -40, y: -10, rotate: -10 },
-    zIndex: 10,
+    open: { x: -88, y: -168, rotate: -18 },
+    hover: { x: -45, y: -38, rotate: -10 },
+    closed: { x: -36, y: -12, rotate: -8 },
     delay: 0,
   },
-  // 2: Azure Fundamentals (Mid-left)
+  // 2: Azure Fundamentals (Mid-Left)
   {
-    open: { x: -48, y: -185, rotate: -12 },
-    hover: { x: -25, y: -44, rotate: -7 },
-    closed: { x: -20, y: -15, rotate: -5 },
-    zIndex: 9,
+    open: { x: -44, y: -182, rotate: -9 },
+    hover: { x: -22, y: -44, rotate: -5 },
+    closed: { x: -18, y: -15, rotate: -4 },
     delay: 0.03,
   },
   // 3: Azure AI Fundamentals (Center)
   {
-    open: { x: 0, y: -200, rotate: 0 },
+    open: { x: 0, y: -188, rotate: 0 },
     hover: { x: 0, y: -48, rotate: 0 },
     closed: { x: 0, y: -18, rotate: 0 },
-    zIndex: 8,
     delay: 0.06,
   },
-  // 4: HCLTech ERS (Mid-right)
+  // 4: HCLTech ERS (Mid-Right)
   {
-    open: { x: 48, y: -185, rotate: 12 },
-    hover: { x: 25, y: -44, rotate: 7 },
-    closed: { x: 20, y: -15, rotate: 5 },
-    zIndex: 7,
+    open: { x: 44, y: -182, rotate: 9 },
+    hover: { x: 22, y: -44, rotate: 5 },
+    closed: { x: 18, y: -15, rotate: 4 },
     delay: 0.09,
   },
-  // 5: Internship (Far right, in back)
+  // 5: Internship (Far Right)
   {
-    open: { x: 95, y: -160, rotate: 24 },
-    hover: { x: 50, y: -35, rotate: 14 },
-    closed: { x: 40, y: -10, rotate: 10 },
-    zIndex: 6,
+    open: { x: 88, y: -168, rotate: 18 },
+    hover: { x: 45, y: -38, rotate: 10 },
+    closed: { x: 36, y: -12, rotate: 8 },
     delay: 0.12,
   },
 ];
 
-export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | "lg" } = {}) {
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 80 : -80,
+    opacity: 0,
+    scale: 0.96,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.3,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -80 : 80,
+    opacity: 0,
+    scale: 0.96,
+    transition: {
+      duration: 0.25,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    },
+  }),
+};
+
+export default function FolderComponent({
+  size = "md",
+}: {
+  size?: "sm" | "md" | "lg";
+} = {}) {
   const theme = themes.black;
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [activeCert, setActiveCert] = useState<CertificateItem | null>(null);
 
-  const handleCardClick = (e: React.MouseEvent, cert: CertificateItem) => {
+  // Selected certificate index (null by default; only set when interacting or returning from modal)
+  const [selectedCertIndex, setSelectedCertIndex] = useState<number | null>(null);
+
+  // Modal state (null when closed, index when open)
+  const [modalIndex, setModalIndex] = useState<number | null>(null);
+  const [slideDirection, setSlideDirection] = useState(0);
+
+  // Swipe gesture tracking
+  const touchStartXRef = useRef<number | null>(null);
+
+  const handleNextCert = () => {
+    setSlideDirection(1);
+    setModalIndex((prev) => {
+      if (prev === null) return 0;
+      const next = (prev + 1) % certificatesData.length;
+      setSelectedCertIndex(next);
+      return next;
+    });
+  };
+
+  const handlePrevCert = () => {
+    setSlideDirection(-1);
+    setModalIndex((prev) => {
+      if (prev === null) return 0;
+      const prevIdx =
+        (prev - 1 + certificatesData.length) % certificatesData.length;
+      setSelectedCertIndex(prevIdx);
+      return prevIdx;
+    });
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (modalIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        handleNextCert();
+      } else if (e.key === "ArrowLeft") {
+        handlePrevCert();
+      } else if (e.key === "Escape") {
+        setModalIndex(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [modalIndex]);
+
+  // Touch Swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - touchStartXRef.current;
+
+    if (diff < -40) {
+      // Swiped Left -> Next
+      handleNextCert();
+    } else if (diff > 40) {
+      // Swiped Right -> Previous
+      handlePrevCert();
+    }
+    touchStartXRef.current = null;
+  };
+
+  const toggleFolder = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setIsOpen((prev) => {
+      if (prev) {
+        setSelectedCertIndex(null);
+        return false;
+      }
+      return true;
+    });
+  };
+
+  const handleCardClick = (e: React.MouseEvent, index: number) => {
     e.stopPropagation();
     if (!isOpen) {
       setIsOpen(true);
       return;
     }
-    setActiveCert(cert);
+    setSelectedCertIndex(index);
+    setSlideDirection(0);
+    setModalIndex(index);
   };
+
+  const activeCert =
+    modalIndex !== null ? certificatesData[modalIndex] : null;
 
   return (
     <>
@@ -138,11 +246,8 @@ export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | 
             height: BASE_HEIGHT * scale,
           }}
           onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => {
-            setIsHovered(false);
-            setIsOpen(false);
-          }}
-          onClick={() => setIsOpen((prev) => !prev)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={toggleFolder}
         >
           <div
             style={{
@@ -185,26 +290,65 @@ export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | 
             >
               {certificatesData.map((cert, index) => {
                 const pos = cardPositions[index] || cardPositions[2];
-                const animState = isOpen ? pos.open : isHovered ? pos.hover : pos.closed;
+                const isSelected =
+                  selectedCertIndex !== null && index === selectedCertIndex;
+
+                // Symmetrical fan arc; only elevate when selected
+                let currentPos = pos.closed;
+                let zIndex = 10 - index;
+
+                if (selectedCertIndex !== null) {
+                  zIndex = isSelected
+                    ? 25
+                    : 10 - Math.abs(index - selectedCertIndex);
+                }
+
+                if (isOpen) {
+                  currentPos = {
+                    x: pos.open.x,
+                    y: isSelected ? pos.open.y - 24 : pos.open.y,
+                    rotate: pos.open.rotate,
+                  };
+                } else if (isHovered) {
+                  currentPos = {
+                    x: pos.hover.x,
+                    y: isSelected ? pos.hover.y - 16 : pos.hover.y,
+                    rotate: pos.hover.rotate,
+                  };
+                } else {
+                  currentPos = {
+                    x: pos.closed.x,
+                    y: isSelected ? -24 : pos.closed.y,
+                    rotate: pos.closed.rotate,
+                  };
+                }
 
                 return (
                   <motion.div
                     key={cert.id}
-                    style={{ position: "absolute", cursor: "pointer", zIndex: pos.zIndex }}
+                    style={{
+                      position: "absolute",
+                      cursor: "pointer",
+                      zIndex,
+                    }}
                     animate={{
-                      x: animState.x,
-                      y: animState.y,
-                      rotate: animState.rotate,
+                      x: currentPos.x,
+                      y: currentPos.y,
+                      rotate: currentPos.rotate,
+                      scale: isSelected && isOpen ? 1.03 : 1,
                     }}
                     transition={{
                       type: "spring",
-                      stiffness: 120,
-                      damping: 13,
+                      stiffness: 140,
+                      damping: 14,
                       delay: isOpen ? pos.delay : isHovered ? pos.delay : 0,
                     }}
-                    onClick={(e) => handleCardClick(e, cert)}
+                    onClick={(e) => handleCardClick(e, index)}
                   >
-                    <MiniCertificateCard cert={cert} />
+                    <MiniCertificateCard
+                      cert={cert}
+                      isSelected={isSelected}
+                    />
                   </motion.div>
                 );
               })}
@@ -220,11 +364,13 @@ export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | 
                 height: 241,
                 transformOrigin: "bottom center",
                 transformStyle: "preserve-3d",
-                pointerEvents: "none",
+                pointerEvents: "auto",
+                cursor: "pointer",
                 zIndex: 30,
               }}
               animate={{ rotateX: isOpen ? -55 : isHovered ? -45 : -15 }}
               transition={{ type: "spring", stiffness: 120, damping: 14 }}
+              onClick={toggleFolder}
             >
               <div
                 style={{
@@ -289,7 +435,10 @@ export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | 
                       k2="-1"
                       k3="1"
                     />
-                    <feColorMatrix type="matrix" values={theme.flapInsetColor} />
+                    <feColorMatrix
+                      type="matrix"
+                      values={theme.flapInsetColor}
+                    />
                     <feBlend
                       mode="normal"
                       in2="shape"
@@ -304,48 +453,66 @@ export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | 
 
         {/* Quick Certificate Selector Buttons below */}
         <div className="folder-buttons-row">
-          {certificatesData.map((cert) => (
-            <button
-              key={cert.id}
-              onClick={() => setActiveCert(cert)}
-              className="folder-quick-btn"
-              type="button"
-            >
-              <span>{cert.title}</span>
-              <ExternalLink size={12} style={{ opacity: 0.6 }} />
-            </button>
-          ))}
+          {certificatesData.map((cert, idx) => {
+            const isSelected =
+              selectedCertIndex !== null && idx === selectedCertIndex;
+            return (
+              <button
+                key={cert.id}
+                onClick={() => {
+                  setSelectedCertIndex(idx);
+                  setIsOpen(true);
+                  setSlideDirection(0);
+                  setModalIndex(idx);
+                }}
+                className={`folder-quick-btn ${
+                  isSelected ? "is-selected" : ""
+                }`}
+                type="button"
+              >
+                <span>{cert.title}</span>
+                <ExternalLink size={12} style={{ opacity: 0.6 }} />
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Swipeable Lightbox Modal */}
       <AnimatePresence>
-        {activeCert && (
+        {activeCert && modalIndex !== null && (
           <motion.div
             className="cert-modal-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setActiveCert(null)}
+            onClick={() => setModalIndex(null)}
           >
             <motion.div
               className="cert-modal-dialog"
-              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              initial={{ scale: 0.92, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.9, y: 20, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 28 }}
+              exit={{ scale: 0.92, y: 20, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 320, damping: 28 }}
               onClick={(e) => e.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
             >
               {/* Modal Header */}
               <div className="cert-modal-header">
                 <div>
+                  <div className="cert-modal-counter">
+                    <span>{`0${modalIndex + 1}`}</span>
+                    <span className="cert-modal-divider">/</span>
+                    <span>{`0${certificatesData.length}`}</span>
+                  </div>
                   <h4 className="cert-modal-title">{activeCert.title}</h4>
                   <p className="cert-modal-meta">
                     {activeCert.issuer} · {activeCert.subtitle}
                   </p>
                 </div>
                 <button
-                  onClick={() => setActiveCert(null)}
+                  onClick={() => setModalIndex(null)}
                   className="cert-modal-close-btn"
                   aria-label="Close modal"
                 >
@@ -353,29 +520,90 @@ export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | 
                 </button>
               </div>
 
-              {/* Certificate Image Frame */}
+              {/* Certificate Image Frame with Slide Transition & Navigation Arrows */}
               <div className="cert-modal-image-wrap">
-                <Image
-                  src={activeCert.imageSrc}
-                  alt={activeCert.title}
-                  width={960}
-                  height={680}
-                  className="cert-modal-image"
-                  priority
-                />
+                {/* Left Arrow Button */}
+                <button
+                  type="button"
+                  className="cert-modal-nav-btn cert-nav-prev"
+                  onClick={handlePrevCert}
+                  title="Previous Certificate (Swipe Right / Left Arrow)"
+                  aria-label="Previous Certificate"
+                >
+                  <ChevronLeft size={22} />
+                </button>
+
+                <AnimatePresence
+                  initial={false}
+                  custom={slideDirection}
+                  mode="wait"
+                >
+                  <motion.div
+                    key={activeCert.id}
+                    custom={slideDirection}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className="cert-modal-slide-container"
+                  >
+                    <Image
+                      src={activeCert.imageSrc}
+                      alt={activeCert.title}
+                      width={960}
+                      height={680}
+                      className="cert-modal-image"
+                      priority
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Right Arrow Button */}
+                <button
+                  type="button"
+                  className="cert-modal-nav-btn cert-nav-next"
+                  onClick={handleNextCert}
+                  title="Next Certificate (Swipe Left / Right Arrow)"
+                  aria-label="Next Certificate"
+                >
+                  <ChevronRight size={22} />
+                </button>
               </div>
 
               {/* Modal Footer */}
               <div className="cert-modal-footer">
-                <span>Click outside to close</span>
-                <a
-                  href={activeCert.imageSrc}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cert-modal-link"
-                >
-                  Open full resolution <ExternalLink size={12} />
-                </a>
+                <div className="cert-modal-dots">
+                  {certificatesData.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      type="button"
+                      className={`cert-dot-indicator ${
+                        dotIdx === modalIndex ? "is-active" : ""
+                      }`}
+                      onClick={() => {
+                        setSlideDirection(dotIdx > modalIndex ? 1 : -1);
+                        setSelectedCertIndex(dotIdx);
+                        setModalIndex(dotIdx);
+                      }}
+                      title={`Go to certificate ${dotIdx + 1}`}
+                      aria-label={`Go to certificate ${dotIdx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <div className="cert-modal-footer-right">
+                  <span className="cert-modal-swipe-hint">
+                    Swipe left / right on mobile
+                  </span>
+                  <a
+                    href={activeCert.imageSrc}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cert-modal-link"
+                  >
+                    Open full resolution <ExternalLink size={12} />
+                  </a>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -386,7 +614,13 @@ export default function FolderComponent({ size = "md" }: { size?: "sm" | "md" | 
 }
 
 // Mini preview card fanning out of the folder
-function MiniCertificateCard({ cert }: { cert: CertificateItem }) {
+function MiniCertificateCard({
+  cert,
+  isSelected,
+}: {
+  cert: CertificateItem;
+  isSelected: boolean;
+}) {
   return (
     <div
       style={{
@@ -394,12 +628,17 @@ function MiniCertificateCard({ cert }: { cert: CertificateItem }) {
         height: 214,
         borderRadius: 18,
         overflow: "hidden",
-        backgroundColor: "#161616",
-        border: "1px solid #333333",
-        boxShadow: "0 14px 28px rgba(0, 0, 0, 0.75)",
+        backgroundColor: isSelected ? "#1c1c1e" : "#161616",
+        border: isSelected
+          ? "1px solid rgba(255, 255, 255, 0.48)"
+          : "1px solid #303030",
+        boxShadow: isSelected
+          ? "0 20px 40px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 255, 255, 0.12)"
+          : "0 14px 28px rgba(0, 0, 0, 0.75)",
         display: "flex",
         flexDirection: "column",
         position: "relative",
+        transition: "all 0.3s ease",
       }}
     >
       {/* Thumbnail */}
@@ -424,7 +663,8 @@ function MiniCertificateCard({ cert }: { cert: CertificateItem }) {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to top, rgba(22, 22, 22, 0.9) 0%, transparent 60%)",
+            background:
+              "linear-gradient(to top, rgba(22, 22, 22, 0.9) 0%, transparent 60%)",
           }}
         />
       </div>
@@ -445,7 +685,7 @@ function MiniCertificateCard({ cert }: { cert: CertificateItem }) {
               display: "block",
               fontFamily: "var(--font-mono)",
               fontSize: "8.5px",
-              color: "var(--text-muted)",
+              color: isSelected ? "#10b981" : "var(--text-muted)",
               textTransform: "uppercase",
               letterSpacing: "0.04em",
               whiteSpace: "nowrap",
@@ -485,12 +725,15 @@ function MiniCertificateCard({ cert }: { cert: CertificateItem }) {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: "8px",
-              color: "#888888",
+              color: isSelected ? "#ffffff" : "#888888",
             }}
           >
-            View details
+            {isSelected ? "Active credential" : "View details"}
           </span>
-          <ExternalLink size={10} style={{ color: "#aaa" }} />
+          <ExternalLink
+            size={10}
+            style={{ color: isSelected ? "#ffffff" : "#aaa" }}
+          />
         </div>
       </div>
     </div>
