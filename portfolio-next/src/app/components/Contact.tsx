@@ -1,49 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
-
-function LiveClock() {
-  const [time, setTime] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-
-  useEffect(() => {
-    const update = () => {
-      const now = new Date();
-      const ist = new Date(
-        now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-      );
-      setTime(
-        ist.toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false,
-        })
-      );
-      setDate(
-        ist.toLocaleDateString("en-US", {
-          weekday: "short",
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        })
-      );
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="status-clock">
-      <span className="status-clock-time">{time}</span>
-      <span className="status-clock-date">{date}</span>
-    </div>
-  );
-}
+import StatusTerminal from "./StatusTerminal";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -71,9 +32,8 @@ export default function Contact() {
 
             <ScrollReveal delay={0.08}>
               <p className="contact-intro">
-                Whether you&apos;re planning an AEM Cloud rollout, scaling
-                backend systems, or looking for experienced engineering
-                support — I&apos;d love to hear from you.
+                Have a project in mind, need engineering support, or want to
+                discuss a new opportunity? Feel free to reach out anytime.
               </p>
             </ScrollReveal>
 
@@ -130,59 +90,10 @@ export default function Contact() {
             </ScrollReveal>
           </div>
 
-          {/* Right: Status Terminal Card (aligned with top) */}
+          {/* Right: Status Terminal Card with Gravity Letters */}
           <div className="contact-aside">
             <ScrollReveal delay={0.15}>
-              <div className="status-card">
-                <div className="status-card-header">
-                  <div className="status-card-dots">
-                    <span className="status-card-dot dot-red" />
-                    <span className="status-card-dot dot-yellow" />
-                    <span className="status-card-dot dot-green" />
-                  </div>
-                  <span className="status-card-title">status.config</span>
-                </div>
-
-                <div className="status-card-body">
-                  <div className="status-row">
-                    <span className="status-key">location</span>
-                    <span className="status-value">Hyderabad, India</span>
-                  </div>
-                  <div className="status-row">
-                    <span className="status-key">timezone</span>
-                    <span className="status-value">IST (UTC+5:30)</span>
-                  </div>
-                  <div className="status-row">
-                    <span className="status-key">local_time</span>
-                    <LiveClock />
-                  </div>
-                  <div className="status-divider" />
-                  <div className="status-row">
-                    <span className="status-key">status</span>
-                    <span className="status-value status-available">
-                      <span className="contact-dot" />
-                      available
-                    </span>
-                  </div>
-                  <div className="status-row">
-                    <span className="status-key">open_to</span>
-                    <span className="status-value">roles · consulting · projects</span>
-                  </div>
-                  <div className="status-row">
-                    <span className="status-key">response</span>
-                    <span className="status-value">&lt; 24 hours</span>
-                  </div>
-                  <div className="status-divider" />
-                  <div className="status-row">
-                    <span className="status-key">stack</span>
-                    <span className="status-value">AEM Cloud · Java · Sling</span>
-                  </div>
-                  <div className="status-row">
-                    <span className="status-key">experience</span>
-                    <span className="status-value">4+ years</span>
-                  </div>
-                </div>
-              </div>
+              <StatusTerminal />
             </ScrollReveal>
           </div>
         </div>
