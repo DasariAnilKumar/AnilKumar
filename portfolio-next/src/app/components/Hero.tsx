@@ -1,6 +1,12 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
@@ -48,18 +54,57 @@ const metaFade = {
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
 
+  // Vertical scroll parallax
   const { scrollY } = useScroll();
-  const imageY = useTransform(scrollY, [0, 600], [0, -100]);
+  const imageScrollY = useTransform(scrollY, [0, 600], [0, -100]);
   const imageOpacity = useTransform(scrollY, [0, 500], [1, 0.3]);
 
+  // Subtle horizontal mouse-based parallax
+  const mouseX = useMotionValue(0);
+
+  // Damped spring for smooth, tight physical tracking
+  const springConfig = { damping: 30, stiffness: 100, mass: 0.5 };
+  const smoothX = useSpring(mouseX, springConfig);
+
+  // Unified reverse horizontal parallax (moving right shifts elements left)
+  // Layer 1: Headline ("Anil Kumar")
+  const nameX = useTransform(smoothX, [-0.5, 0.5], [8, -8]);
+
+  // Layer 2: Role title ("Senior Software Engineer")
+  const roleX = useTransform(smoothX, [-0.5, 0.5], [11, -11]);
+
+  // Layer 3: Cutout Portrait - slightly deeper layer
+  const portraitX = useTransform(smoothX, [-0.5, 0.5], [16, -16]);
+
+  // Layer 4: Meta bar
+  const metaX = useTransform(smoothX, [-0.5, 0.5], [5, -5]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!heroRef.current) return;
+    const rect = heroRef.current.getBoundingClientRect();
+    const normX = (e.clientX - rect.left) / rect.width - 0.5;
+    mouseX.set(normX);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+  };
+
   return (
-    <section id="hero" className="hero" ref={heroRef}>
+    <section
+      id="hero"
+      className="hero"
+      ref={heroRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Upper-left: Display name */}
       <motion.div
         className="hero-headline"
         variants={nameVariants}
         initial="hidden"
         animate="visible"
+        style={{ x: nameX }}
       >
         <motion.span className="hero-name-line" variants={lineVariant}>
           Anil
@@ -82,6 +127,7 @@ export default function Hero() {
         variants={fadeUp}
         initial="hidden"
         animate="visible"
+        style={{ x: roleX }}
       >
         <span className="hero-role-line">Senior Software</span>
         <span className="hero-role-line">Engineer</span>
@@ -90,7 +136,11 @@ export default function Hero() {
       {/* Bottom-right: Cutout image (in front) */}
       <motion.div
         className="hero-image-container"
-        style={{ y: imageY, opacity: imageOpacity }}
+        style={{
+          x: portraitX,
+          y: imageScrollY,
+          opacity: imageOpacity,
+        }}
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ ...transition, duration: 1.1, delay: 0.3 }}
@@ -111,6 +161,7 @@ export default function Hero() {
         variants={metaFade}
         initial="hidden"
         animate="visible"
+        style={{ x: metaX }}
       >
         <div className="hero-meta-left">
           <span className="hero-meta-text">Adobe Certified AEM Developer</span>

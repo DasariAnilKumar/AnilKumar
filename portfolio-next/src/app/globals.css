@@ -441,6 +441,7 @@ img {
   min-height: 430px;
   padding: 1.7rem 1.45rem 1.4rem;
   overflow: hidden;
+  cursor: pointer;
   background: linear-gradient(180deg, #161616 0%, #0c0c0c 100%);
   border: 1px solid #2a2a2a;
   border-radius: 16px;
@@ -449,30 +450,37 @@ img {
     0 28px 48px rgba(0, 0, 0, 0.55);
   transform: rotateY(var(--tilt)) translateZ(0);
   transform-origin: center center;
+  will-change: transform, opacity, border-color, box-shadow;
   transition:
-    transform 0.5s var(--ease-out-expo),
-    opacity 0.35s ease,
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
+    transform 0.45s var(--ease-out-expo),
+    opacity 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .skill-panel:nth-child(1) { --tilt: 16deg; }
 .skill-panel:nth-child(2) { --tilt: 0deg; }
 .skill-panel:nth-child(3) { --tilt: -16deg; }
 
+/* When rack is hovered, dim inactive sibling cards */
 .skill-rack:hover .skill-panel {
-  opacity: 0.38;
+  opacity: 0.35;
 }
 
+/* Active Hovered Card Highlight (Works on Card 1, Card 2, Card 3) */
+.skill-panel:hover,
 .skill-rack:hover .skill-panel:hover {
-  opacity: 1;
-  --tilt: 0deg;
-  z-index: 3;
-  transform: rotateY(0deg) translateY(-16px) scale(1.045);
-  border-color: rgba(255, 255, 255, 0.32);
+  opacity: 1 !important;
+  --tilt: 0deg !important;
+  z-index: 10;
+  transform: rotateY(0deg) translateY(-14px) scale(1.035) !important;
+  background: linear-gradient(180deg, #1c1c1e 0%, #0e0e10 100%) !important;
+  border-color: rgba(255, 255, 255, 0.48) !important;
   box-shadow:
-    inset 0 0 12px 2px rgba(255, 255, 255, 0.1),
-    0 36px 60px rgba(0, 0, 0, 0.7);
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 24px rgba(255, 255, 255, 0.08),
+    0 32px 64px rgba(0, 0, 0, 0.85) !important;
 }
 
 .skill-panel-index {
@@ -488,6 +496,11 @@ img {
   line-height: 1;
   pointer-events: none;
   user-select: none;
+  transition: opacity 0.3s ease;
+}
+
+.skill-panel:hover .skill-panel-index {
+  opacity: 0.1;
 }
 
 .skill-panel-top {
@@ -503,6 +516,11 @@ img {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.skill-panel:hover .skill-cat-number {
+  color: var(--text-secondary);
 }
 
 .skill-cat-title {
@@ -511,6 +529,11 @@ img {
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.03em;
+  transition: color 0.3s ease;
+}
+
+.skill-panel:hover .skill-cat-title {
+  color: #ffffff;
 }
 
 .skill-cat-desc {
@@ -521,6 +544,11 @@ img {
   max-width: 18rem;
   position: relative;
   z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.skill-panel:hover .skill-cat-desc {
+  color: #d1d5db;
 }
 
 .skill-panel-skills {
@@ -542,6 +570,7 @@ img {
   align-items: center;
   gap: 0.7rem;
   letter-spacing: 0.01em;
+  transition: color 0.3s ease;
 }
 
 .skill-panel-skills li::before {
@@ -551,14 +580,18 @@ img {
   flex-shrink: 0;
   background: #ffffff;
   opacity: 0.32;
+  border-radius: 1px;
+  transition: all 0.3s ease;
 }
 
-.skill-rack:hover .skill-panel:hover .skill-panel-skills li {
-  color: #d8d8d8;
+.skill-panel:hover .skill-panel-skills li {
+  color: #f3f4f6;
 }
 
-.skill-rack:hover .skill-panel:hover .skill-panel-skills li::before {
-  opacity: 0.7;
+.skill-panel:hover .skill-panel-skills li::before {
+  background: #10b981;
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.75);
 }
 
 
