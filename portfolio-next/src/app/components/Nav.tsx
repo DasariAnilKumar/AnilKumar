@@ -5,11 +5,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Nav() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      // Only visible when at the top of the page
+      setIsVisible(window.scrollY < 50);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -17,14 +18,23 @@ export default function Nav() {
   }, []);
 
   return (
-    <header className="nav">
-      <motion.nav
+    <motion.header
+      className="nav"
+      initial={{ opacity: 1, y: 0 }}
+      animate={{
+        opacity: isVisible ? 1 : 0,
+        y: isVisible ? 0 : -25,
+      }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        pointerEvents: isVisible ? "auto" : "none",
+      }}
+    >
+      <nav
         className="nav-links-container"
-        layout
-        transition={{ type: "spring", stiffness: 140, damping: 18 }}
         style={{
-          marginLeft: isScrolled ? 0 : "auto",
-          marginRight: isScrolled ? "auto" : "auto",
+          marginLeft: "auto",
+          marginRight: "auto",
         }}
       >
         <Link href="#timeline" className="nav-link">
@@ -39,7 +49,7 @@ export default function Nav() {
         <Link href="#contact" className="nav-link">
           Contact
         </Link>
-      </motion.nav>
-    </header>
+      </nav>
+    </motion.header>
   );
 }

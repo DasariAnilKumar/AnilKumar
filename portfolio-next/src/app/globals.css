@@ -235,6 +235,11 @@ img {
   50% { transform: translateY(4px); }
 }
 
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
 /* ==========================================================================
    COMMON SECTION
    ========================================================================== */
@@ -737,180 +742,257 @@ img {
 }
 
 /* ==========================================================================
-   CONTACT SECTION (CALM EMAIL-LED FINALE)
+   CONTACT SECTION
    ========================================================================== */
 
 .contact-section {
-  padding: 8rem 3rem 5.5rem;
-  background-color: #121211;
-  border-top: 1px solid rgba(242, 240, 235, 0.08);
-  position: relative;
-  overflow: hidden;
+  /* Inherits .section padding and border-top via the shared class. */
 }
 
-.contact-container {
+/* Two-column grid */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.contact-content {
   display: flex;
   flex-direction: column;
-  max-width: 900px;
 }
 
-/* Quiet Label / Eyebrow */
-.contact-label-wrap {
+.contact-aside {
+  padding-top: 0.35rem;
+}
+
+/* Intro paragraph */
+.contact-intro {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 2.5rem;
+}
+
+/* Large display email */
+.contact-email-row {
   display: flex;
-  align-items: baseline;
-  gap: 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: #7E7B74;
-  letter-spacing: 0.05em;
-  margin-bottom: 2.25rem;
-}
-
-.contact-label-number {
-  color: #6E6B64;
-}
-
-.contact-label-text {
-  text-transform: uppercase;
-  color: #A8A59E;
-  font-weight: 500;
-}
-
-/* Primary Focal Element: Large Display Email */
-.contact-email-hero {
-  position: relative;
-  display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 4.5rem;
+  margin-bottom: 2.5rem;
 }
 
-.contact-email-display-link {
+.contact-email-display {
   position: relative;
   display: inline-block;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5.2vw, 4.2rem);
-  font-weight: 450;
-  letter-spacing: -0.025em;
-  color: #F2F0EB;
+  font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
   text-decoration: none;
   cursor: pointer;
-  padding-bottom: 0.4rem;
-  transition: color 0.25s ease, letter-spacing 0.3s ease;
+  padding-bottom: 0.3rem;
+  transition: color 0.25s ease;
 }
 
-.contact-email-display-link:hover {
-  color: #FFFFFF;
-  letter-spacing: -0.015em;
+.contact-email-display:hover {
+  color: var(--text-secondary);
 }
 
-.contact-email-display-underline {
+.contact-email-underline {
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 1.5px;
-  background: rgba(242, 240, 235, 0.35);
-  transform: scaleX(0.25);
+  height: 1px;
+  background: var(--text-muted);
+  transform: scaleX(0.3);
   transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease;
+  transition: transform 0.35s var(--ease-out-expo);
 }
 
-.contact-email-display-link:hover .contact-email-display-underline {
+.contact-email-display:hover .contact-email-underline {
   transform: scaleX(1);
-  background: #F2F0EB;
+  background: var(--text-primary);
 }
 
 .contact-copied-toast {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: #10b981;
   background: rgba(16, 185, 129, 0.08);
   border: 1px solid rgba(16, 185, 129, 0.2);
-  padding: 0.25rem 0.65rem;
-  border-radius: 4px;
-  margin-top: 0.85rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  margin-top: 0.75rem;
   letter-spacing: 0.02em;
 }
 
-/* Quiet Inline Meta & Links */
-.contact-meta-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 2.5rem;
-  border-top: 1px solid rgba(242, 240, 235, 0.08);
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
+/* Links row */
 .contact-links-row {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: #8C8982;
+  gap: 2.5rem;
   flex-wrap: wrap;
 }
 
-.contact-quiet-link {
+.contact-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  color: #F2F0EB;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
   text-decoration: none;
+  letter-spacing: 0.01em;
   transition: color 0.2s ease;
 }
 
-.contact-quiet-link:hover {
-  color: #FFFFFF;
+.contact-link:hover {
+  color: var(--text-primary);
 }
 
-.contact-link-arrow {
-  color: #7E7B74;
+.contact-link-icon {
+  color: var(--text-muted);
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.contact-quiet-link:hover .contact-link-arrow {
-  color: #FFFFFF;
+.contact-link:hover .contact-link-icon {
+  color: var(--text-primary);
   transform: translate(1px, -1px);
 }
 
-.contact-meta-divider {
-  color: rgba(242, 240, 235, 0.18);
-}
-
-.contact-status-inline {
+/* Availability inline */
+.contact-availability {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  color: #A8A59E;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
 }
 
-.contact-status-dot {
-  width: 5.5px;
-  height: 5.5px;
+.contact-dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #10b981;
   box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
   animation: pulseDot 2.5s infinite;
-  display: inline-block;
   flex-shrink: 0;
 }
 
-.contact-location-text {
-  color: #7E7B74;
+/* ==========================================================================
+   STATUS TERMINAL CARD
+   ========================================================================== */
+
+.status-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.contact-colophon {
+.status-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.status-card-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.status-card-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ff5f57; }
+.dot-yellow { background: #febc2e; }
+.dot-green { background: #28c840; }
+
+.status-card-title {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: #7E7B74;
-  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.status-card-body {
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.status-key {
+  color: var(--text-muted);
+  min-width: 95px;
+  flex-shrink: 0;
+}
+
+.status-key::after {
+  content: ":";
+  margin-left: 2px;
+}
+
+.status-value {
+  color: var(--text-secondary);
+}
+
+.status-available {
+  color: #10b981;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.status-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 0.25rem 0;
+}
+
+.status-clock {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-clock-time {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.status-clock-date {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 1px;
 }
 
 /* ==========================================================================
@@ -918,9 +1000,8 @@ img {
    ========================================================================== */
 
 .footer {
-  padding: 2.25rem 3rem;
-  background-color: #121211;
-  border-top: 1px solid rgba(242, 240, 235, 0.06);
+  padding: 2rem 3rem;
+  border-top: 1px solid var(--border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -929,13 +1010,7 @@ img {
 .footer-text {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: #7E7B74;
-}
-
-.footer-location {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: #7E7B74;
+  color: var(--text-muted);
 }
 
 /* ==========================================================================
@@ -946,8 +1021,8 @@ img {
   .nav { padding: 1.5rem 2rem; }
   .hero { padding: 0 2rem; }
   .hero-meta-bar { left: 2rem; right: 2rem; }
-  .section { padding: 6rem 2rem; }
-  .contact-section { padding: 7rem 2rem; }
+  .section { padding: 5rem 2rem; }
+  .contact-grid { gap: 2.5rem; }
   .footer { padding: 2rem; }
 
   .hero-image-container {
@@ -1157,38 +1232,47 @@ img {
     overflow: visible;
   }
 
-  .contact-section {
-    padding: 5.5rem 1.25rem 3rem;
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
-  .contact-label-wrap {
-    margin-bottom: 1.5rem;
+  .contact-intro {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
   }
 
-  .contact-email-hero {
-    margin-bottom: 3.5rem;
+  .contact-email-display {
+    font-size: clamp(1.3rem, 5.5vw, 1.8rem);
   }
 
-  .contact-email-display-link {
-    font-size: clamp(1.4rem, 6.2vw, 2.2rem);
-  }
-
-  .contact-meta-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.25rem;
-    padding-top: 2rem;
+  .contact-email-row {
+    margin-bottom: 2rem;
   }
 
   .contact-links-row {
-    gap: 0.75rem;
-    font-size: 0.72rem;
+    gap: 1.5rem;
+  }
+
+  .contact-link,
+  .contact-availability {
+    font-size: 0.76rem;
+  }
+
+  .status-card-body {
+    padding: 1rem 1.1rem;
+    gap: 0.5rem;
+  }
+
+  .status-row {
+    font-size: 0.75rem;
+    gap: 1rem;
   }
 
   .footer {
-    padding: 2rem 1.25rem;
+    padding: 1.75rem 1.25rem;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
     text-align: center;
   }
 }
@@ -1197,5 +1281,14 @@ img {
   .folder-interactive-box {
     transform: scale(0.82);
     transform-origin: center center;
+  }
+
+  .status-row {
+    flex-wrap: wrap;
+    gap: 0.2rem 0.6rem;
+  }
+
+  .status-key {
+    min-width: 80px;
   }
 }
