@@ -190,6 +190,20 @@ export default function FolderComponent({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [modalIndex]);
 
+  // Prevent background scrolling when modal is open on mobile & desktop
+  useEffect(() => {
+    if (modalIndex !== null) {
+      const originalOverflow = document.body.style.overflow;
+      const originalTouchAction = document.body.style.touchAction;
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.touchAction = originalTouchAction;
+      };
+    }
+  }, [modalIndex]);
+
   // Touch Swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
