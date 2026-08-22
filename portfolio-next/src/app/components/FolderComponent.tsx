@@ -604,20 +604,6 @@ export default function FolderComponent({
                     />
                   ))}
                 </div>
-
-                <div className="cert-modal-footer-right">
-                  <span className="cert-modal-swipe-hint">
-                    Swipe left / right on mobile
-                  </span>
-                  <a
-                    href={activeCert.imageSrc}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cert-modal-link"
-                  >
-                    Open full resolution <ExternalLink size={12} />
-                  </a>
-                </div>
               </div>
             </motion.div>
           </motion.div>

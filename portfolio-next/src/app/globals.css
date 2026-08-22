@@ -1013,19 +1013,16 @@ img {
 .cert-modal-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem 1.5rem;
+  justify-content: center;
+  padding: 0.9rem 1.5rem;
   background: #161616;
   border-top: 1px solid #242424;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-muted);
 }
 
 .cert-modal-dots {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .cert-dot-indicator {
@@ -1043,30 +1040,6 @@ img {
   background: #ffffff;
   width: 18px;
   border-radius: 9999px;
-}
-
-.cert-modal-footer-right {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-.cert-modal-swipe-hint {
-  display: none;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
-.cert-modal-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--text-secondary);
-  transition: color 0.2s ease;
-}
-
-.cert-modal-link:hover {
-  color: #ffffff;
 }
 
 /* ==========================================================================
@@ -1732,27 +1705,13 @@ img {
     display: none !important;
   }
 
-  .cert-modal-swipe-hint {
-    display: inline-block;
-  }
-
   .cert-modal-image-wrap {
     min-height: 280px;
     padding: 0.75rem;
   }
 
   .cert-modal-nav-btn {
-    width: 36px;
-    height: 36px;
-    background: rgba(15, 15, 15, 0.85);
-  }
-
-  .cert-nav-prev {
-    left: 0.5rem;
-  }
-
-  .cert-nav-next {
-    right: 0.5rem;
+    display: none !important;
   }
 
   .footer {
