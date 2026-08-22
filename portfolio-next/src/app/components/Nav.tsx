@@ -28,7 +28,7 @@ export default function Nav() {
         }}
       >
         <Link href="#timeline" className="nav-link">
-          Experience
+          Timeline
         </Link>
         <Link href="#skills" className="nav-link">
           Skills

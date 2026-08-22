@@ -2,6 +2,7 @@ import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Timeline from "./components/Timeline";
 import Skills from "./components/Skills";
+import Certifications from "./components/Certifications";
 import Contact from "./components/Contact";
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
         <Hero />
         <Timeline />
         <Skills />
+        <Certifications />
         <Contact />
       </main>
     </>
