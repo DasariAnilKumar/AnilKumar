@@ -1642,6 +1642,10 @@ img {
     transform: none !important;
   }
 
+  .skill-cat-number {
+    display: none !important;
+  }
+
   .skill-cat-desc {
     max-width: 100% !important;
     margin-bottom: 1.25rem !important;
