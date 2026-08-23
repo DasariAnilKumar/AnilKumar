@@ -31,6 +31,13 @@ export const metadata: Metadata = {
       "Adobe Certified AEM Developer. Enterprise AEM Cloud, Java backend, and multi-country digital experiences.",
     images: ["/og.png"],
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg?v=2", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.svg?v=2",
+    apple: "/favicon.svg?v=2",
+  },
 };
 
 export default function RootLayout({
