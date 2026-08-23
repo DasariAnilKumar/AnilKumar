@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavSection {
   id: string;
@@ -108,6 +109,7 @@ export default function Nav() {
           <Link href="#contact" className="nav-link">
             Contact
           </Link>
+          <ThemeToggle />
         </nav>
       </motion.header>
 
@@ -216,6 +218,9 @@ export default function Nav() {
                   </motion.nav>
                 )}
               </AnimatePresence>
+
+              {/* Theme Switcher in Capsule */}
+              <ThemeToggle />
 
               {/* Far Right: Quick Jump to Top */}
               <button

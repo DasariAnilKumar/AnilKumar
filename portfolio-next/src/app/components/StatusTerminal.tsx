@@ -374,10 +374,13 @@ export default function StatusTerminal() {
       ctx.stroke();
 
       // Glowing Fusion Core Dot
+      const isLight =
+        typeof document !== "undefined" &&
+        document.documentElement.getAttribute("data-theme") === "light";
       ctx.beginPath();
       ctx.arc(current.x, current.y, 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = "#e4e4e7";
-      ctx.shadowColor = "#ffffff";
+      ctx.fillStyle = isLight ? "#18181b" : "#e4e4e7";
+      ctx.shadowColor = isLight ? "rgba(0, 0, 0, 0.4)" : "#ffffff";
       ctx.shadowBlur = 6;
       ctx.fill();
       ctx.shadowBlur = 0; // reset shadow

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 export interface CertificateItem {
   id: number;
@@ -54,12 +55,23 @@ export const certificatesData: CertificateItem[] = [
 const themes = {
   black: {
     backFill: "#0b0b0b",
+    backBorder: "#282828",
     backInsetShadow:
       "inset 0 0 8px 2px rgba(255,255,255,0.25), 0 20px 40px rgba(0,0,0,0.8)",
     flapFill: "#292929",
     flapFillOpacity: 0.25,
     flapStroke: "#888888",
     flapInsetColor: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0",
+  },
+  light: {
+    backFill: "#FAF9F5",
+    backBorder: "#E4E2D9",
+    backInsetShadow:
+      "inset 0 0 10px 2px rgba(255,255,255,0.9), 0 20px 40px rgba(17,17,16,0.06)",
+    flapFill: "#FFFFFF",
+    flapFillOpacity: 0.45,
+    flapStroke: "#E4E2D9",
+    flapInsetColor: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0",
   },
 } as const;
 
@@ -139,7 +151,8 @@ export default function FolderComponent({
 }: {
   size?: "sm" | "md" | "lg";
 } = {}) {
-  const theme = themes.black;
+  const { theme: currentThemeMode } = useTheme();
+  const theme = currentThemeMode === "light" ? themes.light : themes.black;
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -284,7 +297,7 @@ export default function FolderComponent({
                 borderRadius: 25,
                 backgroundColor: theme.backFill,
                 boxShadow: theme.backInsetShadow,
-                border: "1px solid #282828",
+                border: `1px solid ${theme.backBorder}`,
               }}
             />
 
