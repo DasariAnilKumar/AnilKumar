@@ -2182,34 +2182,6 @@ img {
   border-color: #111110 !important;
 }
 
-/* Celestial Toggle */
-[data-theme="light"] .celestial-toggle-pill {
-  background: #FFFFFF !important;
-  border-color: #E4E2D9 !important;
-  color: #6B6A64 !important;
-}
-
-[data-theme="light"] .celestial-toggle-pill:hover {
-  border-color: #111110 !important;
-  color: #111110 !important;
-}
-
-[data-theme="light"] .celestial-toggle-compact {
-  background: #FFFFFF !important;
-  border-color: #E4E2D9 !important;
-  color: #6B6A64 !important;
-}
-
-[data-theme="light"] .celestial-toggle-compact:hover {
-  background: #111110 !important;
-  color: #FFFFFF !important;
-  border-color: #111110 !important;
-}
-
-[data-theme="light"] .celestial-crater-mask {
-  background: #FAF9F5 !important;
-}
-
 /* Timeline */
 [data-theme="light"] .timeline::before {
   background: #E4E2D9 !important;
