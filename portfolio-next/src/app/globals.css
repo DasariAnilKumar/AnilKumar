@@ -1761,13 +1761,14 @@ img {
 
 .not-found-page {
   min-height: 100vh;
+  min-height: 100svh;
   width: 100%;
   background-color: #000000;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 2.5rem 2rem;
+  padding: 3rem 2rem 2.5rem;
   position: relative;
   overflow: hidden;
   user-select: none;
@@ -1802,6 +1803,8 @@ img {
   justify-content: center;
   margin: auto 0;
   gap: 2.5rem;
+  width: 100%;
+  max-width: 1440px;
 }
 
 .not-found-centerpiece {
@@ -1809,23 +1812,32 @@ img {
   align-items: center;
   justify-content: center;
   gap: clamp(1rem, 3vw, 2.5rem);
+  width: 100%;
 }
 
 .not-found-digit {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(7rem, 18vw, 15rem);
+  font-size: clamp(5.5rem, 14vw, 13rem);
   font-weight: 300;
   line-height: 1;
   color: #ffffff;
   letter-spacing: -0.04em;
   display: inline-block;
+  user-select: none;
 }
 
 .not-found-blob-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0.5rem;
+  width: clamp(160px, 26vw, 300px);
+  height: clamp(160px, 26vw, 300px);
+  position: relative;
+}
+
+.liquid-blob-container {
+  width: 100%;
+  height: 100%;
 }
 
 .not-found-actions {
@@ -1877,18 +1889,49 @@ img {
 
 @media (max-width: 768px) {
   .not-found-page {
-    padding: 2rem 1.25rem;
+    padding: 2rem 1.25rem 2.5rem;
+  }
+  .not-found-brand {
+    font-size: 0.95rem;
+    letter-spacing: 0.25em;
+  }
+  .not-found-main {
+    gap: 2rem;
   }
   .not-found-centerpiece {
-    gap: 0.5rem;
+    gap: 0.4rem;
+  }
+  .not-found-digit {
+    font-size: clamp(4.2rem, 18vw, 6.5rem);
+  }
+  .not-found-blob-wrap {
+    width: clamp(140px, 36vw, 190px);
+    height: clamp(140px, 36vw, 190px);
   }
   .not-found-pill-btn {
     padding: 0.75rem 2.2rem;
     font-size: 0.72rem;
   }
   .not-found-footer {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found-page {
+    padding: 1.5rem 1rem 2rem;
+  }
+  .not-found-centerpiece {
+    gap: 0.15rem;
+  }
+  .not-found-digit {
+    font-size: clamp(3.6rem, 17vw, 5.2rem);
+  }
+  .not-found-blob-wrap {
+    width: clamp(120px, 34vw, 160px);
+    height: clamp(120px, 34vw, 160px);
   }
 }
 

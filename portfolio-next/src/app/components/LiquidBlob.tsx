@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 
-export default function LiquidBlob({ size = 260 }: { size?: number }) {
+export default function LiquidBlob({ className = "" }: { className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !container) return;
 
     const gl = canvas.getContext("webgl", { alpha: true, antialias: true });
     if (!gl) return;
@@ -98,7 +100,7 @@ export default function LiquidBlob({ size = 260 }: { size?: number }) {
 
       // Signed distance function for morphing rich organic liquid chrome blob
       float map(vec3 p) {
-        float baseRadius = 0.62;
+        float baseRadius = 0.60;
         
         // Rich multi-layered organic liquid waves
         float t = uTime * 0.68;
@@ -247,9 +249,16 @@ export default function LiquidBlob({ size = 260 }: { size?: number }) {
     let startTime = performance.now();
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
+      const rect = container.getBoundingClientRect();
       mouse.targetX = (e.clientX - rect.left) / rect.width;
       mouse.targetY = (e.clientY - rect.top) / rect.height;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!e.touches[0]) return;
+      const rect = container.getBoundingClientRect();
+      mouse.targetX = (e.touches[0].clientX - rect.left) / rect.width;
+      mouse.targetY = (e.touches[0].clientY - rect.top) / rect.height;
     };
 
     const handleMouseLeave = () => {
@@ -258,12 +267,14 @@ export default function LiquidBlob({ size = 260 }: { size?: number }) {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    container.addEventListener("mouseleave", handleMouseLeave);
 
     const render = () => {
+      const rect = container.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = size * dpr;
-      const h = size * dpr;
+      const w = Math.max(Math.round(rect.width * dpr), 10);
+      const h = Math.max(Math.round(rect.height * dpr), 10);
 
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
@@ -291,16 +302,17 @@ export default function LiquidBlob({ size = 260 }: { size?: number }) {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("mousemove", handleMouseMove);
-      canvas.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
       gl.deleteProgram(program);
     };
-  }, [size]);
+  }, []);
 
   return (
     <div
+      ref={containerRef}
+      className={`liquid-blob-container ${className}`}
       style={{
-        width: size,
-        height: size,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -310,8 +322,8 @@ export default function LiquidBlob({ size = 260 }: { size?: number }) {
       <canvas
         ref={canvasRef}
         style={{
-          width: size,
-          height: size,
+          width: "100%",
+          height: "100%",
           display: "block",
         }}
       />

@@ -18,7 +18,7 @@ export default function NotFound() {
         <div className="not-found-centerpiece">
           <span className="not-found-digit">4</span>
           <div className="not-found-blob-wrap">
-            <LiquidBlob size={340} />
+            <LiquidBlob />
           </div>
           <span className="not-found-digit">4</span>
         </div>
