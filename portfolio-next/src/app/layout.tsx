@@ -54,8 +54,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var saved = localStorage.getItem('theme');
-                  var prefDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  var theme = saved || (prefDark ? 'dark' : 'light');
+                  var theme = saved || 'dark';
                   document.documentElement.setAttribute('data-theme', theme);
                 } catch (e) {}
               })();
