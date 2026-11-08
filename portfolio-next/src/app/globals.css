@@ -452,6 +452,47 @@ img {
   opacity: 0;
 }
 
+/* "ASSEMBLING 000%" readout shown during the intro */
+.pp-hud {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-expo);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pp-hud-pct {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.pp-hud-track {
+  display: block;
+  width: 92px;
+  height: 1px;
+  background: color-mix(in srgb, var(--text-primary) 18%, transparent);
+  overflow: hidden;
+}
+
+.pp-hud-bar {
+  display: block;
+  height: 100%;
+  background: var(--text-primary);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
 /* Bottom metadata bar */
 .hero-meta-bar {
   position: absolute;
@@ -693,19 +734,36 @@ img {
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 1.15rem;
+  gap: 0; /* hover zones touch; the visual gap comes from .skill-panel padding */
   transform-style: preserve-3d;
 }
 
+/* .skill-panel is a fixed, untransformed hover zone. All the 3D motion lives on
+   the inner .skill-card, so the card can tilt, lift and scale without moving
+   out from under the cursor (which caused hover flicker at the edges). */
 .skill-panel {
   --tilt: 0deg;
   position: relative;
   flex: 1 1 0;
-  max-width: 340px;
+  max-width: calc(340px + 1.15rem);
+  /* zone reaches 14px past the card top/bottom to cover the 3D tilt and the lift */
+  padding: 14px 0.575rem;
+  margin: -14px 0;
+  display: flex;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.skill-panel:hover {
+  z-index: 10;
+}
+
+.skill-card {
+  position: relative;
+  flex: 1 1 auto;
   min-height: 430px;
   padding: 1.7rem 1.45rem 1.4rem;
   overflow: hidden;
-  cursor: pointer;
   background: linear-gradient(180deg, #161616 0%, #0c0c0c 100%);
   border: 1px solid #2a2a2a;
   border-radius: 16px;
@@ -727,17 +785,14 @@ img {
 .skill-panel:nth-child(2) { --tilt: 0deg; }
 .skill-panel:nth-child(3) { --tilt: -16deg; }
 
-/* When rack is hovered, dim inactive sibling cards */
-.skill-rack:hover .skill-panel {
+/* While a card is hovered, dim the other cards (not when the cursor is just in a gap) */
+.skill-rack:has(.skill-panel:hover) .skill-panel:not(:hover) .skill-card {
   opacity: 0.35;
 }
 
-/* Active Hovered Card Highlight (Works on Card 1, Card 2, Card 3) */
-.skill-panel:hover,
-.skill-rack:hover .skill-panel:hover {
-  opacity: 1 !important;
-  --tilt: 0deg !important;
-  z-index: 10;
+/* Active hovered card */
+.skill-panel:hover .skill-card {
+  opacity: 1;
   transform: rotateY(0deg) translateY(-14px) scale(1.035) !important;
   background: linear-gradient(180deg, #1c1c1e 0%, #0e0e10 100%) !important;
   border-color: rgba(255, 255, 255, 0.48) !important;
@@ -1700,6 +1755,11 @@ img {
     flex: none !important;
     width: 100% !important;
     max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .skill-card {
     min-height: auto !important;
     height: auto !important;
     padding: 1.5rem 1.25rem 1.75rem !important;
@@ -1709,8 +1769,8 @@ img {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
   }
 
-  .skill-rack:hover .skill-panel,
-  .skill-rack:hover .skill-panel:hover {
+  .skill-rack .skill-card,
+  .skill-panel:hover .skill-card {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -2268,7 +2328,7 @@ img {
   color: #6B6A64 !important;
 }
 
-[data-theme="light"] .skill-panel {
+[data-theme="light"] .skill-card {
   background: #FFFFFF !important;
   border: 1px solid #E4E2D9 !important;
   box-shadow:
@@ -2276,8 +2336,7 @@ img {
     inset 0 1px 1px #FFFFFF !important;
 }
 
-[data-theme="light"] .skill-panel:hover,
-[data-theme="light"] .skill-rack:hover .skill-panel:hover {
+[data-theme="light"] .skill-panel:hover .skill-card {
   background: #FFFFFF !important;
   border-color: #111110 !important;
   box-shadow:

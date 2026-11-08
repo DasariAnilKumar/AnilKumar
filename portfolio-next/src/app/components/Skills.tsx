@@ -58,19 +58,22 @@ export default function Skills() {
           <div className="skill-rack">
             {skillCategories.map((category) => (
               <article key={category.number} className="skill-panel">
-                <span className="skill-panel-index" aria-hidden="true">
-                  {category.number}
-                </span>
-                <div className="skill-panel-top">
-                  <span className="skill-cat-number">{category.number}</span>
-                  <h3 className="skill-cat-title">{category.title}</h3>
+                {/* inner card carries the 3D tilt/lift; the article is a fixed hover zone */}
+                <div className="skill-card">
+                  <span className="skill-panel-index" aria-hidden="true">
+                    {category.number}
+                  </span>
+                  <div className="skill-panel-top">
+                    <span className="skill-cat-number">{category.number}</span>
+                    <h3 className="skill-cat-title">{category.title}</h3>
+                  </div>
+                  <p className="skill-cat-desc">{category.description}</p>
+                  <ul className="skill-panel-skills">
+                    {category.skills.map((skill) => (
+                      <li key={skill}>{skill}</li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="skill-cat-desc">{category.description}</p>
-                <ul className="skill-panel-skills">
-                  {category.skills.map((skill) => (
-                    <li key={skill}>{skill}</li>
-                  ))}
-                </ul>
               </article>
             ))}
           </div>
