@@ -428,6 +428,30 @@ img {
   user-select: none;
 }
 
+/* Particle portrait (ParticlePortrait.tsx) -------------------------------- */
+.pp-canvas,
+.pp-eye {
+  position: absolute;
+  pointer-events: none;
+}
+
+.pp-canvas {
+  z-index: 0;
+}
+
+/* The real photo; opacity is switched by the component when the dots have
+   fully resolved into it (no fade needed: the last canvas frame is the photo). */
+.hero-cutout.pp-photo {
+  position: relative;
+  z-index: 1;
+}
+
+/* Warped eye patches sit exactly on top of the photo's eyes */
+.pp-eye {
+  z-index: 2;
+  opacity: 0;
+}
+
 /* Bottom metadata bar */
 .hero-meta-bar {
   position: absolute;

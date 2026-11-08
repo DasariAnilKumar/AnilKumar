@@ -10,6 +10,7 @@ import {
 import { useRef } from "react";
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
+import ParticlePortrait from "./ParticlePortrait";
 
 const transition = {
   duration: 0.8,
@@ -53,6 +54,7 @@ const metaFade = {
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
+  const portraitRef = useRef<HTMLImageElement>(null);
 
   // Vertical scroll parallax
   const { scrollY } = useScroll();
@@ -145,13 +147,15 @@ export default function Hero() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ ...transition, duration: 1.1, delay: 0.3 }}
       >
+        <ParticlePortrait imgRef={portraitRef} />
         <Image
+          ref={portraitRef}
           src="/images/anil_cutout_transparent.png"
           alt="Anil Kumar"
           width={620}
           height={800}
           className="hero-cutout"
-          priority
+          preload
         />
       </motion.div>
 
