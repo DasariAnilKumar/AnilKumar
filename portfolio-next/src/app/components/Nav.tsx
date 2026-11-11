@@ -16,8 +16,9 @@ const sections: NavSection[] = [
   { id: "hero", number: "01", name: "Home" },
   { id: "timeline", number: "02", name: "Timeline" },
   { id: "skills", number: "03", name: "Skills" },
-  { id: "certifications", number: "04", name: "Certs" },
-  { id: "contact", number: "05", name: "Contact" },
+  { id: "products", number: "04", name: "Products" },
+  { id: "certifications", number: "05", name: "Certs" },
+  { id: "contact", number: "06", name: "Contact" },
 ];
 
 export default function Nav() {
@@ -102,6 +103,9 @@ export default function Nav() {
           </Link>
           <Link href="#skills" className="nav-link">
             Skills
+          </Link>
+          <Link href="#products" className="nav-link">
+            Products
           </Link>
           <Link href="#certifications" className="nav-link">
             Certificates

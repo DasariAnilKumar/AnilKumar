@@ -8,7 +8,7 @@ export default function Certifications() {
     <section id="certifications" className="section">
       <ScrollReveal>
         <div className="section-header">
-          <span className="section-number">04</span>
+          <span className="section-number">05</span>
           <h2 className="section-title">Certifications & Honors</h2>
         </div>
         <p className="section-subtext">

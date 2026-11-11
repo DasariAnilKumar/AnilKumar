@@ -25,7 +25,7 @@ export default function Contact() {
           <div className="contact-content">
             <ScrollReveal>
               <div className="section-header">
-                <span className="section-number">05</span>
+                <span className="section-number">06</span>
                 <h2 className="section-title">Get in Touch</h2>
               </div>
             </ScrollReveal>
